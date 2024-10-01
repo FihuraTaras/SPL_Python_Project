@@ -1,12 +1,29 @@
+import os
+
+history_file = "Logs/calculation_history.txt"
+
 def log_calculation(num1, num2, operator, result):
-    with open("Logs/calculation_history.txt", "a") as log_file:
-        log_file.write(f"{num1} {operator} {num2} = {result}\n")
+    with open(history_file, 'a') as f:
+        if num2 is not None:
+            f.write(f"{num1} {operator} {num2} = {result}\n")
+        else:
+            f.write(f"{operator}{num1} = {result}\n")
 
 def show_history():
-    try:
-        with open("Logs/calculation_history.txt", "r") as log_file:
-            history = log_file.readlines()
-            for line in history:
-                print(line.strip())
-    except FileNotFoundError:
-        print("No calculation history found.")
+    if os.path.exists(history_file):
+        with open(history_file, 'r') as f:
+            history = f.read()
+        if history:
+            print("Calculation History:\n", history)
+        else:
+            print("No history available.")
+    else:
+        print("No history available.")
+
+def clear_history():
+    if os.path.exists(history_file):
+        os.remove(history_file)
+        print("History file removed.")
+    else:
+        print("No history file found to remove.")
+

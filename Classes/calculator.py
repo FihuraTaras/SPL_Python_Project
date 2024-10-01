@@ -5,57 +5,55 @@ from Logs.history import log_calculation
 
 class Calculator:
     def __init__(self, decimal_places=2):
-        self.memory = None
+        self.memory = 0.0
+        self.decimal_places = decimal_places  # Додаємо атрибут для кількості десяткових знаків
         self.history = []
-        self.decimal_places = decimal_places  # Number of decimal
 
-    @staticmethod
-    def get_user_input():
-        num1 = input("Enter the first number (or 'm' to use memory): ")
-        num2 = input("Enter the second number: ")
-        operator = input("Enter the operator (+, -, *, /, %, ^, √): ")
+    def get_user_input(self):
+        """Отримує введення користувача для операції або команд."""
+        first_number = input("Введіть перше число або 'm' для використання збереженого результату: ")
+        if first_number == 'm':
+            first_number = self.memory
+        else:
+            first_number = validate_numbers(first_number)
 
-        num1 = validate_numbers(num1)
-        num2 = validate_numbers(num2, operator)
-        operator = validate_operator(operator)
+        operator = input("Введіть оператор (+, -, *, /, ^, √, %): ")
+        validate_operator(operator)
 
-        return num1, num2, operator
+        second_number = None
+        if operator != '√':  # Квадратний корінь не потребує другого числа
+            second_number = input("Введіть друге число або 'm' для використання збереженого результату: ")
+            if second_number == 'm':
+                second_number = self.memory
+            else:
+                second_number = validate_numbers(second_number)
+
+        return first_number, operator, second_number
 
     def calculate(self):
         while True:
             try:
-                num1, num2, operator = self.get_user_input()
+                first_number, operator, second_number = self.get_user_input()
 
-                if num1 == 'm':
-                    if self.memory is None:
-                        print("Memory is empty.")
-                        continue
-                    num1 = self.memory
+                # Виконання операції
+                result = perform_operation(first_number, operator, second_number)
 
-                result = perform_operation(num1, num2, operator)
+                # Збереження результату в пам'ять
+                self.memory = result
 
-                # We format the result by the number of decimal places
-                result = round(result, self.decimal_places)
+                # Додавання результату до історії
+                log_calculation(first_number, second_number, operator, result)
 
-                print(f"The result of {num1} {operator} {num2} is: {result}")
-                log_calculation(num1, num2, operator, result)
-                self.history.append((num1, num2, operator, result))
+                print(f"Result: {round(result, self.decimal_places)}")
 
-                if input("Save result to memory? (y/n): ").lower() == 'y':
-                    self.memory = result
-
-                if input("Do you want to perform another calculation? (y/n): ").lower() != 'y':
+                if input("Чи хочете продовжити? (y/n): ").lower() != 'y':
                     break
-            except Exception as e:
-                print(f"Error: {e}")
 
-    def change_decimal_places(self):
-        try:
-            new_places = int(input("Enter the number of decimal places to display: "))
-            if new_places >= 0:
-                self.decimal_places = new_places
-                print(f"Decimal places set to: {self.decimal_places}")
-            else:
-                print("Decimal places must be 0 or higher.")
-        except ValueError:
-            print("Invalid input. Please enter an integer.")
+            except Exception as e:
+                print(f"Помилка: {e}")
+
+    def set_decimal_places(self, places):
+        """Метод для встановлення кількості десяткових знаків."""
+        self.decimal_places = places
+        print(f"Decimal places set to: {self.decimal_places}")
+

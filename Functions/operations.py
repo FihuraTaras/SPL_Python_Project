@@ -1,21 +1,45 @@
 import math
 
-def perform_operation(num1, num2, operator):
-    if operator == '+':
-        return num1 + num2
-    elif operator == '-':
-        return num1 - num2
-    elif operator == '*':
-        return num1 * num2
-    elif operator == '/':
-        if num2 == 0:
-            raise ZeroDivisionError("Cannot divide by zero.")
-        return num1 / num2
-    elif operator == '%':
-        return num1 % num2
-    elif operator == '^':
-        return num1 ** num2
-    elif operator == '√':
-        return math.sqrt(num1)
-    else:
-        raise ValueError(f"Unsupported operator: {operator}")
+def add(a, b):
+    return a + b
+
+def subtract(a, b):
+    return a - b
+
+def multiply(a, b):
+    return a * b
+
+def divide(a, b):
+    if b == 0:
+        raise ValueError("Ділення на нуль неможливе")
+    return a / b
+
+def power(a, b):
+    return a ** b
+
+def square_root(a, _):
+    if a < 0:
+        raise ValueError("Не можна обчислити квадратний корінь з від'ємного числа")
+    return math.sqrt(a)
+
+def modulus(a, b):
+    return a % b
+
+# Словник для вибору функції
+operations = {
+    '+': add,
+    '-': subtract,
+    '*': multiply,
+    '/': divide,
+    '^': power,
+    '√': square_root,
+    '%': modulus,
+}
+
+def perform_operation(a, operator, b):
+    """Виконує операцію, базуючись на виборі оператора."""
+    operation = operations.get(operator)
+    if not operation:
+        raise ValueError(f"Оператор {operator} не підтримується")
+    return operation(a, b)
+

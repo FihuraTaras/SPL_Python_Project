@@ -2,7 +2,7 @@ DECIMAL_PLACES = 2
 
 class Config:
     def __init__(self):
-        self.decimal_places = 2
+        self.decimal_places = 2  # Налаштування кількості десяткових знаків
 
     def set_decimal_places(self, places):
         try:
@@ -14,3 +14,6 @@ class Config:
                 print("Decimal places cannot be negative.")
         except ValueError:
             print("Invalid input. Please enter a valid number.")
+
+
+

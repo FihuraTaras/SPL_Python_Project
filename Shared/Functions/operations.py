@@ -25,8 +25,7 @@ def square_root(a, _):
 def modulus(a, b):
     return a % b
 
-# Словник для вибору функції
-operations = {
+operations = { #
     '+': add,
     '-': subtract,
     '*': multiply,
@@ -37,7 +36,6 @@ operations = {
 }
 
 def perform_operation(a, operator, b):
-    """Виконує операцію, базуючись на виборі оператора."""
     operation = operations.get(operator)
     if not operation:
         raise ValueError(f"Оператор {operator} не підтримується")

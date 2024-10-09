@@ -1,6 +1,6 @@
 import os
 
-history_file = "Logs/calculation_history.txt"
+history_file = "Shared/Logs/calculation_history.txt"
 
 def log_calculation(num1, num2, operator, result):
     with open(history_file, 'a') as f:

@@ -2,7 +2,7 @@ DECIMAL_PLACES = 2
 
 class Config:
     def __init__(self):
-        self.decimal_places = 2  # Налаштування кількості десяткових знаків
+        self.decimal_places = 2
 
     def set_decimal_places(self, places):
         try:

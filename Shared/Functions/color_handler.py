@@ -1,4 +1,3 @@
-
 #color_handler.py
 from termcolor import colored
 
@@ -17,4 +16,5 @@ def apply_color(text, color='white'): #Завдання 4: Колір текст
             return colored(text, 'white')
     else:
         return text  # Якщо кольори не підтримуються, просто повертаємо текст без кольору
+
 

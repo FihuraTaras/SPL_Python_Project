@@ -1,4 +1,3 @@
-
 #art_handler.py
 import pyfiglet
 
@@ -19,4 +18,3 @@ def choose_font(fonts, font_choice):
     except ValueError:
         print("Invalid input. Using default font.")
         return 'slant'
-

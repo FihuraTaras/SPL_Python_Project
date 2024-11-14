@@ -1,0 +1,1 @@
+Query: SELECT * FROM table, Result: Result for SELECT * FROM table
